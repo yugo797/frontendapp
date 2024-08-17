@@ -10,10 +10,11 @@ const Home = () => {
   const [btnTxt, setBtnTxt] = useState("Dodaj na listu želja");
   const { userId, token1 } = useContext(UserContext);
 
+  const url = "http://13.51.197.157/";
   useEffect(() => {
     const fetchMovies = async () => {
       try {
-        const response = await fetch("http://localhost:8000/movies/");
+        const response = await fetch(`${url}movies/`);
         const data = await response.json();
         setMovies(data);
         setFilteredMovies(data);
@@ -50,15 +51,12 @@ const Home = () => {
     console.log("Adding movie to wishlist, movie id: ", movieId);
     const token = localStorage.getItem("access_token");
     try {
-      const resp = await fetch(
-        `http://localhost:8000/wishlist/?user_id=${userId}`,
-        {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const resp = await fetch(`${url}wishlist/?user_id=${userId}`, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       const wishlist = await resp.json();
       let wishlistId = null;
       let movieids = [];
@@ -72,7 +70,7 @@ const Home = () => {
           return;
         }
       } else {
-        const createResp = await fetch("http://localhost:8000/wishlist/", {
+        const createResp = await fetch(`${url}wishlist/`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -106,17 +104,14 @@ const Home = () => {
       };
       console.log("Sending PUT request with body:", requestBody);
 
-      const updateResp = await fetch(
-        `http://localhost:8000/wishlist/${wishlistId}`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify(requestBody),
-        }
-      );
+      const updateResp = await fetch(`${url}wishlist/${wishlistId}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(requestBody),
+      });
 
       if (updateResp.ok) {
         console.log(`Movie ${movieId} added to wishlist`);

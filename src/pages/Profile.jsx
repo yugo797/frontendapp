@@ -6,6 +6,7 @@ import { UserContext } from "../context/UserCont";
 import "../styles/profile.css";
 
 const Profile = () => {
+  const url = "http://13.51.197.157/";
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -53,7 +54,7 @@ const Profile = () => {
     const getUser = async (userEmailToken) => {
       try {
         const response = await fetch(
-          `http://localhost:8000/users/email/?user_email=${userEmailToken}`,
+          `${url}users/email/?user_email=${userEmailToken}`,
           {
             method: "GET",
             headers: {
@@ -79,16 +80,13 @@ const Profile = () => {
 
     const fetchWishlist = async (userdt) => {
       try {
-        const resp = await fetch(
-          `http://localhost:8000/wishlist/?user_id=${userdt}`,
-          {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
+        const resp = await fetch(`${url}wishlist/?user_id=${userdt}`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        });
 
         if (resp.ok) {
           const data = await resp.json();
@@ -118,16 +116,13 @@ const Profile = () => {
       try {
         const movieDetails = await Promise.all(
           movieIds.map(async (movie) => {
-            const resp = await fetch(
-              `http://localhost:8000/movies/${movie.id}`,
-              {
-                method: "GET",
-                headers: {
-                  "Content-Type": "application/json",
-                  Authorization: `Bearer ${token}`,
-                },
-              }
-            );
+            const resp = await fetch(`${url}movies/${movie.id}`, {
+              method: "GET",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+              },
+            });
             if (resp.ok) {
               const data = await resp.json();
               return data;

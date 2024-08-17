@@ -6,6 +6,8 @@ import { useState, useContext } from "react";
 import ErrorMsg from "../assets/ErrorMsg";
 
 const Register = () => {
+  const url = "http://13.51.197.157/users";
+
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -14,7 +16,6 @@ const Register = () => {
   const navigate = useNavigate();
 
   const handleRegister = async () => {
-    const url = "http://localhost:8000/users/";
     const requestOptions = {
       method: "POST",
       headers: {

@@ -13,8 +13,9 @@ const Login = () => {
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
+  const url = "http://13.51.197.157/";
+
   const handleLogin = async () => {
-    
     const requestOptions = {
       method: "POST",
       headers: {
@@ -30,19 +31,19 @@ const Login = () => {
     };
 
     try {
-      const response = await fetch(
-        "http://localhost:8000/users/token",
-        requestOptions
-      );
+      const response = await fetch(`${url}users/token`, requestOptions);
 
       if (response.ok) {
         const data = await response.json();
         localStorage.setItem("access_token", data.access_token);
         console.log("Uspješna prijava");
-        console.log("Token after login: ", localStorage.getItem("access_token"));
+        console.log(
+          "Token after login: ",
+          localStorage.getItem("access_token")
+        );
 
         const userResponse = await fetch(
-          `http://localhost:8000/users/email/?user_email=${email}`,
+          `${url}users/email/?user_email=${email}`,
           {
             method: "GET",
             headers: {

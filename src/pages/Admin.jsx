@@ -4,6 +4,8 @@ import { UserContext } from "../context/UserCont";
 import { useContext } from "react";
 
 const Admin = () => {
+  const url = "http://13.51.197.157/";
+
   const [view, setView] = useState("home");
   const [data, setData] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
@@ -22,7 +24,7 @@ const Admin = () => {
 
   useEffect(() => {
     if (view === "movies") {
-      fetch("http://localhost:8000/movies/")
+      fetch(`${url}movies/`)
         .then((response) => response.json())
         .then((data) => setData(data));
     } else if (view === "users") {
@@ -58,8 +60,8 @@ const Admin = () => {
   const handleCreateOrUpdate = () => {
     const method = editingMovieId ? "PUT" : "POST";
     const url = editingMovieId
-      ? `http://localhost:8000/movies/${editingMovieId}`
-      : `http://localhost:8000/movies/`;
+      ? `${url}movies/${editingMovieId}`
+      : `${url}movies/`;
 
     // Convert categories from a comma-separated string to an array
     const categoriesArray = form.categories
@@ -129,7 +131,7 @@ const Admin = () => {
   };
 
   const handleDelete = (movieId) => {
-    fetch(`http://localhost:8000/movies/${movieId}`, {
+    fetch(`${url}movies/${movieId}`, {
       method: "DELETE",
     })
       .then(() => {
